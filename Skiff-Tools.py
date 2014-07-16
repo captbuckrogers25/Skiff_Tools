@@ -6,7 +6,7 @@ import sys
 import csv
 
 
-def get_sheet_list(csvfile):
+def get_sheet_list(csvfile, sep='","', ws='y'):
 	'''NOTE: REQUIRES MODULE csv TO BE IMPORTED BEFOREHAND.
 	Opens a csv file and returns a list of lists of the contents in 
 	string format.  File operations and exceptions are to be taken care
@@ -28,7 +28,9 @@ def get_csv():
 	except IOError:
 		print("\n {} is a bad file name or was not found.  Please check path.".format(in_file_str))
 		sys.exit()
-	csv_list = get_sheet_list(in_file)
+        sep = input("\n Column seperation character? (defaults to ','): ")
+        ws = input("\n Strip whitespace from entries (defaults to yes)? (y/n): ")
+	csv_list = get_sheet_list(in_file, sep, ws)
 	in_file.close
 	title_line = input("\n Is the first line a title line? (y/n): ")
 	if title_line[0] == 'y' or title_line[0] == 'Y':
