@@ -33,12 +33,16 @@ def get_csv():
         ws = input("\n Strip whitespace from entries (defaults to yes)? (y/n): ")
 	csv_list = get_sheet_list(in_file, sep, ws)
 	in_file.close
-	title_line = input("\n Is the first line a title line? (y/n): ")
-	if title_line[0] == 'y' or title_line[0] == 'Y':
-		csv_list = csv_list[1:]
-		return(csv_list)
-	else:
-		return(csv_list)
+        title_line = input("\n Enter the number of title or header lines (default is 0): ")
+        title_line = int(title_line)
+        csv_list = csv_list[title_line:]
+        return(csv_list)
+#	title_line = input("\n Is the first line a title line? (y/n): ")
+#	if title_line[0] == 'y' or title_line[0] == 'Y':
+#		csv_list = csv_list[1:]
+#		return(csv_list)
+#	else:
+#		return(csv_list)
 
 def get_param(file_name, param):
 	'''Pulls a plasma parameter from the param files outputted by the 
@@ -247,4 +251,6 @@ def add_Cs_Debye_iaDispRel(list, Ne_row=7, Te_row=8, Mi='39.9'):
 	print("Added 'Ion Sound Speed', 'Electron Debye Length', 'Ion Acoustic Wave Dispursion Relation (w^2)', and 'w'")
 	return(list)
 
-
+def clean_spect(list):
+    '''takes a list generated from the CSV output file from the Ocean Optics 
+    SpectraSuite software and converts it to a true CSV, retaining headers.'''
