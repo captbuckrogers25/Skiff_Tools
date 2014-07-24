@@ -20,7 +20,7 @@ def get_sheet_list(csvfile, sep='c', ws='y'):
         if sep == 's':  #   This if/else chain was to get around faults in passing the delimiter character as a variable
            file_reader = csv.reader(csvfile, delimiter=' ')
         elif sep == 't':
-           file_reader = csv.reader(csvfile, delimiter='/t')
+           file_reader = csv.reader(csvfile, delimiter='\t')
         else:
            file_reader = csv.reader(csvfile, delimiter=',')
         for row in file_reader:
