@@ -9,7 +9,7 @@ import csv
 Skiff_Tools_Spreadsheet_Label_Line_List = []
 
 
-def get_sheet_list(csvfile, sep=' ', ws='y'):
+def get_sheet_list(csvfile, sep='c', ws='y'):
         '''NOTE: REQUIRES MODULE csv TO BE IMPORTED BEFOREHAND.
         Opens a csv file and returns a list of lists of the contents in 
         string format.  File operations and exceptions are to be taken care
@@ -17,7 +17,12 @@ def get_sheet_list(csvfile, sep=' ', ws='y'):
         print("sep = {}".format(sep))
         print("ws = {}".format(ws))
         sheet_list = []
-        file_reader = csv.reader(csvfile, delimiter=sep) #Need to split this into three if-then choices, c,s,t for comma, space, tab and add choices to get_csv
+        if sep == 's':  #   This if/else chain was to get around faults in passing the delimiter character as a variable
+           file_reader = csv.reader(csvfile, delimiter=' ')
+        elif sep == 't':
+           file_reader = csv.reader(csvfile, delimiter='/t')
+        else:
+           file_reader = csv.reader(csvfile, delimiter=',')
         for row in file_reader:
             tmplst = []
             for i in row:
@@ -38,7 +43,7 @@ def get_csv():
         except IOError:
                 print("\n {} is a bad file name or was not found.  Please check path.".format(in_file_str))
                 sys.exit()
-        sep = input("\n Column seperation character? (defaults to ' '): ")
+        sep = input("\n Column seperation character? ('c' for comma, 's' for space, 't' for tab, defaults to comma): ")
         ws = input("\n Strip whitespace from entries (defaults to yes)? (y/n): ")
         csv_list = get_sheet_list(in_file, sep, ws)
         in_file.close
