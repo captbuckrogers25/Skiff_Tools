@@ -6,7 +6,6 @@
 
 import sys
 import csv
-Skiff_Tools_Spreadsheet_Label_Line_List = []
 
 
 def get_sheet_list(csvfile, sep='c', ws='y'):
