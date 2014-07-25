@@ -32,7 +32,7 @@ def get_sheet_list(csvfile, sep='c', ws='y'):
             sheet_list.append(tmplst)
         return (sheet_list)
 
-def get_csv():
+def get_csv():  #  maybe add defaults for filename, sep, ws, title, etc.  then it could be called without interaction
         '''NOTE: REQUIRES MODULES csv AND sys TO BE IMPORTED.
         User interface for selecting csv file and uses get_sheet_list to
         compile list of lists of strings representing the csv file.  Function
@@ -122,8 +122,10 @@ def write_master(list):
                 sys.exit()
         label_line_list = ['#num', 'Pressure(E-4 torr)', 'Fd. Power(W)', 'f(MHz)', 'vSWR', 'HP Output(mV)', 'Vp(V)', 'Electron Density(n/cc)', 'Electron Temperature(eV)', 'Ref. Power(W)', 'Plasma Power(eV/cc)', 'Fwd. Power - Ref. Power (W)', 'Plasma Production Power(W)', 'Eff.', 'Cs', 'Debye', 'w^2', 'w']
         label_tag = input("\n Use old label format? (y/n): ")
-        if label_tag[0] == 'y' or title_line[0] == 'Y':
+        if label_tag[0] == 'y' or label_tag[0] == 'Y':
             Skiff_Tools_Spreadsheet_Label_Line_List = label_line_list
+        else:
+            Skiff_Tools_Spreadsheet_Label_Line_List = add_label(list)
         out_writer = csv.writer(out_file)
         out_writer.writerow(Skiff_Tools_Spreadsheet_Label_Line_List)
         for row in list:
@@ -271,6 +273,25 @@ def add_Cs_Debye_iaDispRel(list, Ne_row=7, Te_row=8, Mi='39.9'):
 def clean_spect(list):
     '''takes a list generated from the CSV output file from the Ocean Optics 
     SpectraSuite software and converts it to a true CSV, retaining headers.'''
+
+def add_label(list):
+    '''interface to add a label/column headers to a csv file '''
+    j = 0
+    while j<len(list[1]):
+        print("Col{}".format(j+1), end='\t')
+        j += 1
+    j = 0
+    print ("\n")
+    while j<len(list[1]):
+        print('{}'.format(list[1][j]), end='\t')
+        j += 1
+    label_list = []
+    j = 0
+    while j<len(list[1]):
+        col = input("Label for Col{}:  ".format(j+1))
+        label_list.append(col)
+    print ("\n")
+    return(label_list)
 
 
 #END
