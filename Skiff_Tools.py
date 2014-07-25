@@ -290,6 +290,7 @@ def add_label(list):
     while j<len(list[1]):
         col = input("Label for Col{}:  ".format(j+1))
         label_list.append(col)
+        j += 1
     print ("\n")
     return(label_list)
 
