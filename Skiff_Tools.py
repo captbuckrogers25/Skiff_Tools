@@ -286,6 +286,7 @@ def add_label(list):
         j += 1
     label_list = []
     j = 0
+    print('\n')
     while j<len(list[1]):
         col = input("Label for Col{}:  ".format(j+1))
         label_list.append(col)
@@ -293,5 +294,26 @@ def add_label(list):
     print ("\n")
     return(label_list)
 
+def compare_lists(list1, list2, compcol, header='n'):
+    '''compared a given column in two two-column lists and returns the difference.
+    Provisions are made for a header line; further developments are needed to 
+    generalize the lists and provide more flexible output of the difference.
+    At present, the first column of each list is assumed to be identical and act as
+    a key for the reminder of each row.'''
+    if header == 'y' or header == 'Y':
+        list1 = list1[1:]
+        list2 = list2[1:]
+#    wl1 = list1[1:]
+#    wl2 = list2[1:]
+    complst = []
+    counter = 0
+    for i in list1:
+        linelst = []
+        linelst.append(list1[counter][0])
+        tmp = float(list1[counter][compcol-1]) - float(list2[counter][compcol-1])
+        linelst.append(abs(tmp))
+        complst.append(linelst)
+        counter += 1
+    return(complst)
 
 #END
