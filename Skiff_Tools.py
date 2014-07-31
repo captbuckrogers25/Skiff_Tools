@@ -30,19 +30,21 @@ def get_sheet_list(csvfile, sep='c', ws='y'):
             sheet_list.append(tmplst)
         return (sheet_list)
 
-def get_csv():  #  maybe add defaults for filename, sep, ws, title, etc.  then it could be called without interaction
+def get_csv(in_file_str=NONE):  #  maybe add defaults for filename, sep, ws, title, etc.  then it could be called without interaction
         '''NOTE: REQUIRES MODULES csv AND sys TO BE IMPORTED.
         User interface for selecting csv file and uses get_sheet_list to
         compile list of lists of strings representing the csv file.  Function
         then closes the file and returns the master list.'''
         try:
-                in_file_str = input("\n CSV file name: ")
+                in_file_str = input("\n CSV file name: ", end='')
                 in_file = open(in_file_str, 'r')
         except IOError:
                 print("\n {} is a bad file name or was not found.  Please check path.".format(in_file_str))
                 sys.exit()
         sep = input("\n Column seperation character? ('c' for comma, 's' for space, 't' for tab, defaults to comma): ")
         ws = input("\n Strip whitespace from entries (defaults to yes)? (y/n): ")
+        if ws == '':
+            ws = None
         csv_list = get_sheet_list(in_file, sep, ws)
         in_file.close
         title_line = input("\n Enter the number of title or header lines (default is 0): ")
