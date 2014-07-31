@@ -25,7 +25,7 @@ def get_sheet_list(csvfile, sep='c', ws='y'):
         for row in file_reader:
             tmplst = []
             for i in row:
-                if ws == 'y' or ws == 'Y':
+                if ws[0] == 'y' or ws[0] == 'Y':
                     tmplst.append(i.strip())
             sheet_list.append(tmplst)
         return (sheet_list)
