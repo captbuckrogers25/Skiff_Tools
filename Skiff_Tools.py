@@ -30,14 +30,14 @@ def get_sheet_list(csvfile, sep='c', ws='y'):
             sheet_list.append(tmplst)
         return (sheet_list)
 
-def get_csv(in_file_str=None, sep=None, ws=None, title_line=0):  #  maybe add defaults for filename, sep, ws, title, etc.  then it could be called without interaction
+def get_csv(in_file_str=None, sep='c', ws='y', title_line=0):  #  maybe add defaults for filename, sep, ws, title, etc.  then it could be called without interaction
         '''NOTE: REQUIRES MODULES csv AND sys TO BE IMPORTED.
         User interface for selecting csv file and uses get_sheet_list to
         compile list of lists of strings representing the csv file.  Function
         then closes the file and returns the master list.'''
         if in_file_str == None:
             try:
-                in_file_str = input("\n CSV file name: ", end='')
+                in_file_str = input("\n CSV file name: ")
                 in_file = open(in_file_str, 'r')
             except IOError:
                 print("\n {} is a bad file name or was not found.  Please check path.".format(in_file_str))
@@ -45,7 +45,7 @@ def get_csv(in_file_str=None, sep=None, ws=None, title_line=0):  #  maybe add de
             sep = input("\n Column seperation character? ('c' for comma, 's' for space, 't' for tab, defaults to comma): ")
             ws = input("\n Strip whitespace from entries (defaults to yes)? (y/n): ")
             if ws == '':
-                ws = None
+                ws = 'y'
             title_line = input("\n Enter the number of title or header lines (default is 0): ")
             if title_line == '':
                 title_line = 0
@@ -326,4 +326,13 @@ def compare_lists(list1, list2, compcol, header='n'):
         counter += 1
     return(complst)
 
+def colswap(list, col1, col2):
+    '''Swaps the positions of two columns of a list of lists. '''
+    col1 = int(col1)
+    col2 = int(col2)
+    for i in list:
+        tmpa = i[col1]
+        i[col1] = i[col2]
+        i[col2] = tmpa
+    return(list)
 #END
