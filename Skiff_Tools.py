@@ -354,7 +354,30 @@ def temp_correct(Tb, Eeff=0.386, wl=650):
     T = 1/T
     return(T)
 
+def Ephoton_calc(wl, c=2.997E8):
+    '''Caclulates energy of a single photon at the given wavelength(m).  Allunits SI '''
+    h = 6.626E-34
+    E = h*c/wl
+    return(E)
 
+def add_Ephoton(list, col = 0):
+    '''takes a list generated from a csv file of the spectrograph and calculates
+    the energy of a single photon of the wavelength listed for the channel on 
+    each line.  This energy is then appended as an additional column in the list.'''
+    for i in list:
+        Eph = Ephoton_calc(float(i[col]))
+        i.append(Eph)
+    return(list)
 
+def sum_energy(list, colwl=0, colcnt=1, scale=1):
+    '''Calculates the sum of the energy represented by the counts as measured on
+    the spectrograph.  This is done by first calculating as if one count equaled
+    one photon of that energy and then applying a scaling factor (photons/count)
+    to the final sum of all channels.'''
+    sum = 0
+    for i in list:
+        sum += Ephoton_calc(float(i[colwl])) * float(i[colcnt])
+    sum = sum * scale
+    return(sum)
 
 #END
