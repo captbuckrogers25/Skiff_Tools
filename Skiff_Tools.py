@@ -335,4 +335,26 @@ def colswap(list, col1, col2):
         i[col1] = i[col2]
         i[col2] = tmpa
     return(list)
+
+def temp_correct(Tb, Eeff=0.386, wl=650):
+    '''use to correct the blackbody temperature of a filament based on the observed
+    temperature and correcting for emissivity of the emitting body.  Used primarily
+    to find correct filament temperature for a tungsten bulb when calibrating the 
+    Ocean Optics Spectrometer for use in energy analysis.  Default effective 
+    emissivity based on base emissivity for tungsten, corrected for reflection of 
+    glass envelope.  Default wavelength based on the wl used in the L&C pyro-
+    meter used to determine observed temperature, Tb.  All units are SI. wl is in
+    nanometers; Tb and T are in Kelvin.  Eeff is unitless.'''
+    h = 6.626E-34
+    k = 1.381E-23
+    c = 2.99E8
+    wl = wl/1E9
+    import math
+    T = (wl*k*math.log(1+Eeff))/(h*c) + 1/Tb
+    T = 1/T
+    return(T)
+
+
+
+
 #END
